@@ -1,21 +1,24 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
-//1017
-const int MAX=200000+1;
+
+const int MAX=200001+1;
 int main() {
 	// your code goes here
 	int t=0;
 	cin>>t;
-	int m[MAX];
+	// int ma[MAX],mb[MAX];
 	while(t--){
-		int maxNum=-1;
-		for(int i=0;i<MAX;++i){
-			m[i]=0;
-		}
 		int n=0;
 		cin>>n;
 		vector<int> a,b;
+		vector<int> ma(2*n+1,0);
+		vector<int> mb(2*n+1,0);
+		// for(int i=0;i<n*2+2;++i){
+		// 	ma[i]=0;
+		// 	mb[i]=0;
+		// }
 		for(int i=0;i<n;++i){
 			int c=0;
 			cin>>c;
@@ -26,42 +29,35 @@ int main() {
 			cin>>c;
 			b.push_back(c);
 		}
-		++m[a[0]];
-		++m[b[0]];
-		maxNum=max(maxNum,m[a[0]]);
-		maxNum=max(maxNum,m[b[0]]);
+		
+		int aIdx=0;
 		for(int i=1;i<n;++i){
-			int curA=a[i];
-			int curB=b[i];
-					
-			if(!m[curA] || !m[curB]){
-				if(m[curA]){
-					++m[curA];
-					maxNum=max(m[curA],maxNum);
-				}
-				if(m[curB]){
-					++m[curB];
-					maxNum=max(m[curB],maxNum);
-				}
-				if(!m[curA]){
-					m[curA]=1;
-					m[a[i-1]]=0;
-				}
-				if(!m[curB]){
-					m[curB]=1;
-					m[b[i-1]]=0;
-				}
-			}else{
-				++m[curA];
-				++m[curB];
-				maxNum=max(m[curA],maxNum);
-				maxNum=max(m[curB],maxNum);
+			if(a[i]!=a[i-1]){
+				ma[a[i-1]]=max(ma[a[i-1]],i-aIdx);
+				aIdx=i;
 			}
-			cout<<m[1]<<endl;
+		}
+		// cout<<a[n-1];
+		ma[a[n-1]]=max(ma[a[n-1]],n-aIdx);
+		// cout<<1;
+		// return 0;
+		int bIdx=0;
+		for(int i=1;i<n;++i){
+			if(b[i]!=b[i-1]){
+				mb[b[i-1]]=max(mb[b[i-1]],i-bIdx);
+				bIdx=i;
+			}
 		}
 		
+		mb[b[n-1]]=max(mb[b[n-1]],n-bIdx);
+		
+		int maxNum=0;
+		for(int i=1;i<=2*n;++i){
+			maxNum=max(maxNum,ma[i]+mb[i]);
+		}
 		
 		cout<<maxNum<<"\n";
+		
 	}
 	return 0;
 }
