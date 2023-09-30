@@ -21,16 +21,12 @@ int main() {
 			cout<<k*g<<"\n";
 			continue;
 		}
-		// n=min(n,(s/(gause_g-1))+1);
 		ll sum=0;
-		// sum+=(n-1)*((g-1)/2);
-		sum+=n*((g-1)/2);
-		ll last_num=s-sum;
-		sum-=(g-1)/2;
 		
+		sum=(n-1)*((g-1)/2);
+		ll last_num=s-sum;
 		ll r=last_num;
-		ll L=((g-1)/2 + r)%g;
-		// cout<<sum<<" "<<last_num<<" "<<g<<" "<<L<<endl;
+		ll L=r%g;
 		if(L<((g-1)/2 +1)){
 			sum+=L;
 		}else{
