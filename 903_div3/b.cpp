@@ -15,95 +15,47 @@ int main() {
 	cout.tie(NULL);
 	int t=0;
 	cin>>t;
+
+	// 3개의 threadlet과 가위 쌍
+	// 하나의 threadlet을 두개의 threadlet으로 나눈다
+	// 최대 3번까지 나눌 수 있을때, 동일한 길이로 나눌 수 있는지?
 	while(t--){
-		vector<ll> J,G;
-		ll n,m,k;
-		cin>>n>>m>>k;
-		for(int i=0;i<n;++i){
-			ll c=0;
-			cin>>c;
-			J.push_back(c);
+		vector<ll> v;
+		for(int i=0;i<3;++i){
+			ll a=0;
+			cin>>a;
+			v.push_back(a);
 		}
-		for(int i=0;i<m;++i){
-			ll c=0;
-			cin>>c;
-			G.push_back(c);
+		if(v[0]==v[1] && v[1]==v[2]){
+			cout<<"YES"<<"\n";
+			continue;
 		}
-		sort(J.begin(),J.end());
-		sort(G.begin(),G.end());
-		vector<ll> first_J, first_G, second_J, second_G;
-		//first_J
-		if(J[0]<G[m-1]){
-			first_J.push_back(G[m-1]);
-			for(int i=1;i<n;++i){
-				first_J.push_back(J[i]);
+		sort(v.begin(),v.end());
+		int cnt=3;
+		bool flag=0;
+		while(cnt--){
+			ll max_num=v[v.size()-1];
+			if(max_num>v[0]){
+				v[v.size()-1]=max_num-v[0];
+				v.push_back(v[0]);
 			}
-			first_G.push_back(J[0]);
-			for(int i=0;i<m-1;++i){
-				first_G.push_back(G[i]);
+			sort(v.begin(),v.end());
+			flag=1;
+			for(int i=1;i<v.size();++i){
+				if(v[i]!=v[i-1]){
+					flag=0;
+					break;
+				}
 			}
+			if(flag){
+				break;
+			}
+		}
+		if(flag){
+			cout<<"YES"<<"\n";
 		}else{
-			first_J=J;
-			first_G=G;
+			cout<<"NO"<<"\n";
 		}
-		sort(first_J.begin(),first_J.end());
-		sort(first_G.begin(),first_G.end());
-		//second_J G공격
-		if(first_G[0]<first_J[n-1]){
-			second_G.push_back(first_J[n-1]);
-			for(int i=1;i<m;++i){
-				second_G.push_back(first_G[i]);
-			}
-			second_J.push_back(first_G[0]);
-			for(int i=0;i<n-1;++i){
-				second_J.push_back(first_J[i]);
-			}
-		}else{
-			second_J=first_J;
-			second_G=first_G;
-		}
-		// for(int i=0;i<n;++i){
-		// 	cout<<first_J[i]<<" ";
-		// }cout<<endl;
-		// for(int i=0;i<n;++i){
-		// 	cout<<second_J[i]<<" ";
-		// }cout<<endl;
-		ll sum=0;
-		if(k%2==1){
-			for(int i=0;i<n;++i){
-				sum+=first_J[i];
-			}	
-		}else{
-			for(int i=0;i<n;++i){
-				sum+=second_J[i];
-			}	
-		}
-		
-		// if(J[0]<G[G.size()-1]){
-		// 	if(k%2==1){
-		// 		sum+=G[G.size()-1];
-		// 		for(int i=1;i<n;++i){
-		// 			sum+=J[i];
-		// 		}
-		// 	}else{
-		// 		for(int i=0;i<n;++i){
-		// 			sum+=J[i];
-		// 		}
-		// 	}
-		// }else{
-		// 	if(k%2==1){
-		// 		for(int i=0;i<n;++i){
-		// 			sum+=J[i];
-		// 		}	
-		// 	}else{
-		// 		sum+=G[0];
-		// 		for(int i=0;i<n-1;++i){
-		// 			sum+=J[i];
-		// 		}
-		// 	}
-		// }
-		cout<<sum<<"\n";
-		cout<<"\n";
 	}	
 	return 0;
 }
