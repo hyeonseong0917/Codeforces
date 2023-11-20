@@ -7,33 +7,18 @@ int main() {
 	// your code goes here
 	int t=0;
 	cin>>t;
-	vector<int> v;
 	while(t--){
-		int x,k=0;
-		cin>>x>>k;
-		int cnt=0;
-		int m=x;
-		v.clear();
-		int sum=0;
-		while(1){
-			if(sum==x){
-				break;
-			}
-			if(m%k==0){
-				// ++cnt;
-				--m;
+		int x,y,k;
+		cin>>x>>y>>k;
+		if(x>=y){
+			cout<<x<<"\n";
+		}else{
+			if(x+k>=y){
+				cout<<y<<"\n";
 			}else{
-				sum+=m;
-				v.push_back(m);
-				m=x-m;
-				
-				// cout<<m<<"\n";
+				cout<<y+y-(x+k)<<"\n";
 			}
-		}
-		cout<<v.size()<<endl;
-		for(int i=0;i<v.size();++i){
-			cout<<v[i]<<" ";
-		}cout<<endl;
+		}		
 	}
 	return 0;
 }
