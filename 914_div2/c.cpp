@@ -5,63 +5,64 @@
 #include <algorithm>
 #include <cmath>
 using namespace std;
-
+ 
 #define ll long long
-
+ 
+ 
 int main() {
 	// your code goes here
 	ios_base :: sync_with_stdio(false); 
 	cin.tie(NULL); 
 	cout.tie(NULL);
-	int t=0;
+	ll t=0;
 	cin>>t;
 	while(t--){
-		ll n,x;
-		cin>>n>>x;
-		map<ll,ll> m;
-		ll k=0;
-		k=max(x,(ll)2);
-		ll cnt=0;
-		if((n-x)%2==0){
-			ll fst_num=(n-x)/2;	
-			for(ll t=1;t<=(ll)sqrt(fst_num);++t){
-				if(fst_num%t==0){
-					if(!m[t] && t>=x-1){
-						// cout<<t<<endl;
-						m[t]=1;
-						++cnt;	
-					}
-					if(!m[fst_num/t] && fst_num/t>=x-1){
-						// cout<<fst_num/t<<endl;
-						++m[fst_num/t];
-						++cnt;
-					}
-				}
-			}
+		ll n,k;
+		cin>>n>>k;
+		vector<ll> v(n,0);
+		for(ll i=0;i<n;++i){
+			ll a=0;
+			cin>>a;
+			v[i]=a;
 		}
-		if(x==1){
-			cout<<cnt<<"\n";
+		sort(v.begin(),v.end());
+ 
+		ll ans=v[0];
+		// cout<<ans<<"\n";
+		for(ll i=0;i<n-1;++i){
+			ans=min(ans,(ll)abs(v[i+1]-v[i]));
+		}
+		if(k>=3){
+			cout<<0<<"\n";
 			continue;
-		}
-		if((n+x-2)%2==0){
-			ll sed_num=(n+x-2)/2;	
-			for(ll t=1;t<=(ll)sqrt(sed_num);++t){
-				if(sed_num%t==0){
-					if(!m[t] && t>=x-1){
-						// cout<<t<<endl;
-						m[t]=1;
-						++cnt;	
+		}else if(k==2){
+			for(ll i=0;i<n;++i){
+				for(ll j=0;j<i;++j){
+					ll diff=v[i]-v[j];
+					ll L=0;
+					ll R=n-1;
+					ll mid;
+ 
+					while(L<R){
+						mid=(L+R)/2;
+						if(v[mid]<diff){
+							L=mid+1;
+						}else{
+							R=mid;
+						}
 					}
-					if(!m[sed_num/t] && sed_num/t>=x-1){
-						// cout<<sed_num/t<<endl;
-						++m[sed_num/t];
-						++cnt;
+					if(R-1>=0){
+						ans=min(ans,diff-v[R-1]);	
 					}
+					if(R<n){
+						ans=min(ans,v[R]-diff);		
+					}
+					
 				}
 			}
 		}
-		cout<<cnt<<"\n";
-
+		cout<<ans<<"\n";
+ 
 	}	
 	return 0;
 }
