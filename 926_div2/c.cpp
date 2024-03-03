@@ -16,51 +16,50 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
-		ll n,x;
-		cin>>n>>x;
-		map<ll,ll> m;
-		ll k=0;
-		k=max(x,(ll)2);
-		ll cnt=0;
-		if((n-x)%2==0){
-			ll fst_num=(n-x)/2;	
-			for(ll t=1;t<=(ll)sqrt(fst_num);++t){
-				if(fst_num%t==0){
-					if(!m[t] && t>=x-1){
-						// cout<<t<<endl;
-						m[t]=1;
-						++cnt;	
-					}
-					if(!m[fst_num/t] && fst_num/t>=x-1){
-						// cout<<fst_num/t<<endl;
-						++m[fst_num/t];
-						++cnt;
-					}
+		ll k,x,a;
+		cin>>k>>x>>a;
+		ll init_num=a;
+		ll ans=0;
+		if(x<=k-1){
+			if((a-x)*k>a){
+				cout<<"YES"<<"\n";
+			}else{
+				cout<<"NO"<<"\n";
+			}
+		}else{
+			bool flag=0;
+			ll idx=k;
+			a-=k-1;
+			if(a<=0){
+				cout<<"NO"<<"\n";
+				continue;
+			}
+			ll cnt=2;
+			while(1){
+				if(idx==x+1){
+					break;
 				}
+				if(a+cnt*(k-1)<=init_num){
+					cnt=(init_num-a)/(k-1);
+					++cnt;
+					continue;
+				}
+				if(cnt>a){
+					flag=1;
+					break;
+				}
+				a-=cnt;
+				++idx;
+			}
+			if(a*k<=init_num){
+				flag=1;
+			}
+			if(flag){
+				cout<<"NO"<<"\n";
+			}else{
+				cout<<"YES"<<"\n";
 			}
 		}
-		if(x==1){
-			cout<<cnt<<"\n";
-			continue;
-		}
-		if((n+x-2)%2==0){
-			ll sed_num=(n+x-2)/2;	
-			for(ll t=1;t<=(ll)sqrt(sed_num);++t){
-				if(sed_num%t==0){
-					if(!m[t] && t>=x-1){
-						// cout<<t<<endl;
-						m[t]=1;
-						++cnt;	
-					}
-					if(!m[sed_num/t] && sed_num/t>=x-1){
-						// cout<<sed_num/t<<endl;
-						++m[sed_num/t];
-						++cnt;
-					}
-				}
-			}
-		}
-		cout<<cnt<<"\n";
 
 	}	
 	return 0;
