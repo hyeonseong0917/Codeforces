@@ -3,6 +3,7 @@
 #include <vector>
 #include <math.h>
 #include <map>
+#include <stack>
 using namespace std;
 
 int dp[100000+1];
@@ -13,36 +14,32 @@ int main() {
 	cout.tie(NULL);
 	int t=0;
 	cin>>t;
-	
-	vector<int> v;
 	while(t--){
-		v.clear();
-		int n=0;
-		cin>>n;
+		int N;
 		string s;
+		cin>>N;
 		cin>>s;
-		reverse(s.begin(),s.end());
-		// 00110 -> 01100
-		// v=[0,3,4]
-		// 0000111 -> 1110000
-		// v=[3,4,5,6]
-		// i인덱스 전에 있는 0들을 
-		for(int i=0;i<n;++i){
-			if(s[i]=='0'){
-				v.push_back(i);
+		int arr[26+1];
+		for(int i=0;i<26;++i){
+			arr[i]=0;
+		}
+		for(int i=0;i<N;++i){
+			++arr[s[i]-'a'];
+		}
+		int max_num=0;
+		char max_char;
+		for(int i=0;i<26;++i){
+			max_num=max(max_num,arr[i]);
+		}
+		if(max_num>(N/2)){
+			cout<<max_num-(N-max_num)<<"\n";
+		}else{
+			if(N%2==0){
+				cout<<0<<"\n";
+			}else{
+				cout<<1<<"\n";
 			}
 		}
-		long long sum=0;
-		for(int i=0;i<n;++i){
-			if(i<v.size()){
-				sum+=v[i]-i;
-				
-				cout<<sum<<" ";
-			}else{
-				cout<<-1<<" ";
-			}
-		}cout<<"\n";
-
 	}
 	return 0;
 }
