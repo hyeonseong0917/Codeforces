@@ -14,64 +14,38 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
-		int N,M,K;
-		cin>>N>>M>>K;
-		set<int> a,b;
-		map<int,int> m;
+		int N;
+		vector<int> v;
+		cin>>N;
 		for(int i=0;i<N;++i){
-			int c=0;
-			cin>>c;
-			if(c<=K){
-				if(!m[c]){
-					++m[c];	
-				}
-				a.insert(c);	
-			}
+			int a=0;
+			cin>>a;
+			v.push_back(a);
 		}
-		for(int i=0;i<M;++i){
-			int c=0;
-			cin>>c;
-			if(c<=K){
-				if(!m[c]){
-					++m[c];	
-				}
-				b.insert(c);	
-			}
-		}
-		for(int i=1;i<=K;++i){
-			if(a.count(i)==1 && b.count(i)==1){
-				++m[i];
-			}
-		}
-		vector<int> tmp;
-		int a_cnt=0, b_cnt=0;
-		for(int i=1;i<=K;++i){
-			if(m[i]==1){
-				if(a.count(i)==1){
-					++a_cnt;
-				}
-				if(b.count(i)==1){
-					++b_cnt;
-				}
-			}else if(m[i]>=2){
-				tmp.push_back(i);
-			}
-		}
-		// cout<<a_cnt<<" "<<b_cnt<<"\n";
-		for(int i=0;i<tmp.size();++i){
-			if(a_cnt<b_cnt){
-				++a_cnt;
+		int ans=0;
+		int fst_num=1;
+		int sed_num=1;
+		for(int i=1;i<N;++i){
+			if(v[i]==v[i-1]){
+				++fst_num;
 			}else{
-				++b_cnt;
+				break;
 			}
 		}
-		// cout<<a_cnt<<" "<<b_cnt<<"\n";
-		if(a_cnt==(K/2) && b_cnt==(K/2)){
-			cout<<"YES"<<"\n";
-		}else{
-			cout<<"NO"<<"\n";
+		for(int i=N-2;i>=0;--i){
+			if(v[i]==v[i+1]){
+				++sed_num;
+			}else{
+				break;
+			}
 		}
-
+		if(v[0]==v[N-1]){
+			ans=N-(fst_num+sed_num);
+			ans=max(ans,0);
+		}else{
+			ans=min(N-fst_num, N-sed_num);
+		}
+		cout<<ans<<"\n";
 	}
 	return 0;
 }
