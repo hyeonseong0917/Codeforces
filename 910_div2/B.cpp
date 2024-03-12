@@ -28,9 +28,13 @@ int main() {
 		ll cnt=0;
 		while(idx>=0){
 			if(v[idx]>num){
-				ll k=(v[idx]+num-1)/num;
-				cnt+=k-1;
-				num=v[idx]/k;
+				if(v[idx]%num==0){
+					cnt+=(v[idx]/num)-1;
+				}else{
+				    ll k=v[idx]/num+1;
+					cnt+=k-1;
+					num=v[idx]/k;
+				}
 			}else{
 				num=v[idx];
 			}
