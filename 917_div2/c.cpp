@@ -14,36 +14,29 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
-		int N;
-		vector<int> v;
-		cin>>N;
+		int N,K,D;
+		cin>>N>>K>>D;
+		vector<int> a,v;
 		for(int i=0;i<N;++i){
-			int a=0;
-			cin>>a;
-			v.push_back(a);
+			int c=0;
+			cin>>c;
+			a.push_back(c);
+		}
+		for(int i=0;i<K;++i){
+			int c=0;
+			cin>>c;
+			v.push_back(c);
 		}
 		int ans=0;
-		int fst_num=1;
-		int sed_num=1;
-		for(int i=1;i<N;++i){
-			if(v[i]==v[i-1]){
-				++fst_num;
-			}else{
-				break;
+		for(int i=0;i<min(2*N,D);++i){
+			int cnt=0;
+			for(int j=0;j<N;++j){
+				if(a[j]==j+1) ++cnt;
 			}
-		}
-		for(int i=N-2;i>=0;--i){
-			if(v[i]==v[i+1]){
-				++sed_num;
-			}else{
-				break;
+			ans=max(ans,cnt+(D-(i+1))/2);
+			for(int j=0;j<v[i%K];++j){
+				++a[j];
 			}
-		}
-		if(v[0]==v[N-1]){
-			ans=N-(fst_num+sed_num);
-			ans=max(ans,0);
-		}else{
-			ans=min(N-fst_num, N-sed_num);
 		}
 		cout<<ans<<"\n";
 	}
