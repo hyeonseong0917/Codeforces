@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 #define ll long long
@@ -8,22 +9,14 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
+		string s;
 		ll N;
 		cin>>N;
-		ll a=1;
-		ll cnt=0;
-		while(1){
-			a=(ll)pow(2,cnt);
-			if(a>=N){
-				if(a!=N){
-					--cnt;
-				}
-				break;
-			}else{
-				++cnt;
-			}
-		}
-		cout<<(ll)pow(2,cnt)<<"\n";
+		cin>>s;
+		string t=s;
+		reverse(t.begin(),t.end());
+		cout<<min(s,t+s)<<"\n";
+
 	}
 	return 0;
 }
