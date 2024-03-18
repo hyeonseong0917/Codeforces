@@ -9,23 +9,28 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
-		int n,m,k;
-		cin>>n>>m>>k;
-		int ans=0;
-		vector<int> v;
-		for(int i=0;i<n;++i){
-			int a=0;
-			cin>>a;
-			v.push_back(a);
-		}
-		for(int i=0;i<m;++i){
-			int a=0;
-			cin>>a;
-			for(int j=0;j<n;++j){
-				if(a+v[j]<=k) ++ans;
+		int n;
+		string s;
+		cin>>n;
+		cin>>s;
+		int cnt=0;
+		int i=1;
+		while(i<s.size()-1){
+			if((s[i]=='a' && s[i-1]=='m' && s[i+1]=='p') || (s[i]=='i' && s[i-1]=='p' && s[i+1]=='e')){
+				if(s[i]=='a' && i+3<=s.size()-1){
+					if(s.substr(i-1,5)=="mapie"){
+						++cnt;
+						i+=4;
+						continue;
+					}
+				}
+				++cnt;
 			}
+
+			++i;
 		}
-		cout<<ans<<"\n";
+		
+		cout<<cnt<<"\n";
 	}
 	return 0;
 }
