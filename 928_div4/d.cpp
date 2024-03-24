@@ -7,7 +7,6 @@ using namespace std;
 
 #define ll long long
 
-const int MAX=200000+5;
 
 int main() {
 	// your code goes here
@@ -16,30 +15,31 @@ int main() {
 	cout.tie(NULL);
 	int t=0;
 	cin>>t;
-	map<char,int> first_str, second_str;
+	ll target=(ll)pow(2,31)-1;
 	while(t--){
-		int n=0;
-		first_str.clear();
-		second_str.clear();
-		cin>>n;
-		string s;
-		cin>>s;
-		for(int i=0;i<s.size();++i){
-			++first_str[s[i]];
+		ll N;
+		cin>>N;
+		vector<ll> v(N,0);
+		for(ll i=0;i<N;++i){
+			cin>>v[i];
 		}
-		int total_sum=0;
-		
-		for(int i=0;i<s.size();++i){
-			--first_str[s[i]];
-			++second_str[s[i]];
-			int cur_sum=0;
-			for(int j=0;j<26;++j){
-				cur_sum+=min(1,first_str['a'+j])+min(1,second_str['a'+j]);
+		sort(v.begin(),v.end());
+		ll L=0;
+		ll R=N-1;
+		ll cnt=N;
+		while(L<R){
+			if(v[L]+v[R]==target){
+				--cnt;
+				++L;
+				--R;
+			}else if(v[L]+v[R]>target){
+				--R;
+			}else{
+				++L;
 			}
-			total_sum=max(total_sum,cur_sum);
 		}
-		cout<<total_sum<<"\n";
-		cout<<"\n";
+		cout<<cnt<<"\n";
+		
 	}
 	return 0;
 }
