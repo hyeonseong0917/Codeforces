@@ -7,54 +7,40 @@ using namespace std;
 
 int main() {
 	// your code goes here
+	ios_base :: sync_with_stdio(false); 
+	cin.tie(NULL); 
+	cout.tie(NULL);
 	int t=0;
 	cin>>t;
 	vector<ll> s;
 	while(t--){
-		ll n,c=0;
-		cin>>n>>c;
-		s.clear();
-		for(ll i=0;i<n;++i){
-			ll a=0;
-			cin>>a;
-			s.push_back(a);
-		}
-		
-		ll L=1;
-		ll R=1000000000;
-		ll W=1;
-		while(L<=R){
-			ll mid=(ll)(L+R)/(ll)2;
-			ll sum=0;
-			// cout<<L<<" "<<R<<endl;
+		ll N,K;
+		cin>>N>>K;
+		if(K<=(N+1)/2){
+			cout<<2*K-1<<"\n";
+		}else{
+			ll cur_num=(N+1)/2;
+			ll ans;
+			int carry=1;
 			bool flag=0;
-			for(ll i=0;i<s.size();++i){
-				ll cur_num=(s[i]+(mid*2))*(s[i]+(mid*2));
-				// cout<<cur_num<<"\n";
-				if(sum>9223372036854775807-cur_num){
+			while(!flag){
+				ll M=N/(ll)pow(2,carry); //
+				if(M%2==0){
+					--M;
+				}
+				if(cur_num+(M-1)/2+1>=K){
+					ll diff=cur_num+(M-1)/2+1-K;
+					ll cur_idx=(M-1)/2-diff;
+					ans=(ll)pow(2,carry)*(cur_idx*2+1);
 					flag=1;
 					break;
+				}else{
+					cur_num+=(M-1)/2+1;
 				}
-				sum+=cur_num;
-				
+				++carry;
 			}
-			if(flag==1){
-				R=mid-1;
-				continue;
-			}
-			// cout<<sum<<" "<<L<<" "<<R<<"\n";
-			if(sum<c){
-				L=mid+1;
-			}else if(sum>c){
-				R=mid-1;
-			}else{
-				W=mid;
-				break;
-			}
+			cout<<ans<<"\n";
 		}
-		cout<<W<<"\n";
-		// cout<<"\n";
-		
 	}
 	return 0;
 }
