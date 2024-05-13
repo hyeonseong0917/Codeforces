@@ -22,41 +22,48 @@ int main() {
 		for(ll i=0;i<n;++i){
 			cin>>v[i];
 		}
-		ll L=1, R=1000000000000;
-		ll s=0;
-		while(L<=R){
-			ll mid=(L+R)/2;
-			ll sum=0;
-			for(ll i=0;i<n;++i){
-				if(v[i]<mid){
-					sum+=(mid-v[i]);
+		sort(v.begin(),v.end());
+		reverse(v.begin(),v.end());
+		ll s=v[n-1];
+		ll cnt=1;
+		ll idx=n-1;
+		for(ll i=n-2;i>=0;--i){
+			if(v[i]==s){
+				++cnt;
+			}else{
+				idx=i;
+				break;
+			}
+		}
+		// cout<<idx<<" "<<cnt<<endl;
+		if(idx==n-1){
+			cout<<(s-1)*n+n-cnt+k+1<<"\n";	
+			continue;
+		}
+		while(idx>=0){
+			if((v[idx]-s)*cnt>k) break;
+			// cout<<s<<endl;
+			k-=(v[idx]-s)*cnt;
+			s=v[idx];
+			int tmp_idx=idx;
+			for(ll i=idx;i>=0;--i){
+				if(v[i]!=s){
+					idx=i;
+					break;
+				}else{
+					++cnt;
 				}
 			}
-			if(sum<=k){
-				s=max(s,mid);
-				L=mid+1;
-			}else{
-				R=mid-1;
+			if(tmp_idx==idx){
+				break;
 			}
 		}
-		for(ll i=0;i<n;++i){
-			if(v[i]<s){
-				k-=(s-v[i]);
-				v[i]=s;
-			}
-		}
-		// k가 남았음
-		sort(v.begin(),v.end());
+		// cout<<s<<endl;
+		s+=(k/cnt);
+		// cout<<s<<" "<<cnt<<endl;
+		k%=cnt;
+		cout<<(s-1)*n+n-cnt+k+1<<"\n";
 		
-		
-		ll cnt=0;
-		for(ll i=0;i<n;++i){
-			if(v[i]>s){
-				++cnt;
-			}
-		}
-		ll ans=s+(s-1)*(n-1)+cnt;
-		cout<<ans<<"\n";
 	}
 	return 0;
 }
