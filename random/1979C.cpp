@@ -4,11 +4,12 @@
 using namespace std;
 
 #define ll long long
-bool comp(pair<ll,ll> a, pair<ll,ll> b){
-	if(a.first==b.first){
-		a.second<b.second;
-	}
-	return a.first>b.first;
+ll gcd(ll a, ll b){
+	if(b==0) return a;
+	return gcd(b,a%b);
+}
+ll lcm(ll a, ll b){
+	return (a*b)/gcd(a,b);
 }
 int main() {
 	// your code goes here
@@ -17,51 +18,50 @@ int main() {
 	while(t--){
 		ll n;
 		cin>>n;
-		vector<pair<ll,ll>> v;
+		vector<ll> v(n,0);
+		ll cur_lcm=1;
+		ll a=0;
 		for(ll i=0;i<n;++i){
-			ll a;
-			cin>>a;
-			v.push_back({a,i});
+			cin>>v[i];
+			cur_lcm=lcm(max(cur_lcm,v[i]),min(cur_lcm,v[i]));
 		}
-		sort(v.begin(),v.end(),comp);
+		// for(ll i=0;i<n;++i){
+		// 	a+=cur_lcm/v[i];
+		// 	cout<<a<<endl;
+
+		// }
+		// cout<<cur_lcm<<endl;
 		ll L=1;
 		ll R=1000000000;
-		vector<ll> ans(n,0);
-		ll a;
+		bool flag=0;
+		ll ans=0;
 		while(L<=R){
-			bool flag=0;
 			ll mid=(L+R)/2;
-			ll sum=mid;
-			ll fst_num=(sum+v[0].first-1)/v[0].first;
-			ll sed_num=(sum+v[n-1].first-1)/v[n-1].first;
-			ll cur_num=sum-(fst_num+sed_num);
-			for(ll i=1;i<n-1;++i){
-				cur_num-=(cur_num+v[i].first-1)/v[i].first;
-				if(cur_num<0){
-					flag=1;
-					break;
-				}
+			// sum이 mid임
+			ll cur_sum=cur_lcm*mid;
+			for(ll i=0;i<n;++i){
+				cur_sum-=(cur_lcm/v[i])*mid;
 			}
-			if(flag){
+			if(cur_sum<n*cur_lcm){
 				L=mid+1;
-			}else{
-				cur_num=sum-(fst_num+sed_num);
-				cout<<cur_num<<endl;
-				ans[v[0].second]=fst_num;
-				ans[v[n-1].second]=sed_num;
-				for(ll i=1;i<n-1;++i){
-					ans[v[i].second]=(cur_num+v[i].first-1)/v[i].first;
-					cur_num-=(cur_num+v[i].first-1)/v[i].first;
-				}
+			}else if(cur_sum>=n*cur_lcm){
+				R=mid-1;
+				flag=1;
+				ans=mid;
+				// cout<<ans<<endl;
 				break;
 			}
 		}
-		if(ans.empty()){
-			cout<<-1<<"\n";
-		}else{
+		if(flag){
+			vector<ll> res;
 			for(ll i=0;i<n;++i){
-				cout<<ans[i]<<" ";
-			}cout<<"\n";	
+				res.push_back(ans/v[i]+1);
+			}
+			for(ll i=0;i<n;++i){
+				cout<<res[i]<<" ";
+			}cout<<"\n";
+		}else{
+			cout<<-1<<"\n";
 		}
 		
 	} 
