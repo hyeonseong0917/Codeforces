@@ -28,10 +28,15 @@ int main() {
 			v[i]=i+1;
 			max_sum+=abs(n-i-v[i]);
 		}
+<<<<<<< HEAD
+=======
+		// cout<<max_sum<<endl;
+>>>>>>> 2d4be4502d01d283900b30c1270d44b8dd311e96
 		if(k>max_sum){
 			cout<<"NO"<<"\n";
 			continue;
 		}
+<<<<<<< HEAD
 		vector<ll> ans(n,0);
 		if(n>=k){
 			for(ll i=0;i<=n-k-1;++i){
@@ -79,6 +84,32 @@ int main() {
 					ans[i]=v[i+1];
 					ans[i+=1]=v[i];
 				}
+=======
+		bool flag=0;
+		vector<ll> ans(n,0);
+		if(n>=k){
+			ans[0]=v[k/2];
+			ans[k/2]=v[0];
+		}else{
+			for(ll i=0;i<n;++i){
+				if(k==0) break;
+				ll diff=(n-i-v[i])*2;
+				if(k<diff){		
+					ans[i]=v[i+k/2];
+					ans[i+k/2]=v[i];
+                    break;
+                }else{
+					// k>=diff
+					k-=diff;
+                    ans[i]=v[n-i-1];
+                    ans[n-i-1]=v[i];
+                }
+			}
+		}
+		for(ll i=0;i<n;++i){
+			if(!ans[i]){
+				ans[i]=v[i];
+>>>>>>> 2d4be4502d01d283900b30c1270d44b8dd311e96
 			}
 		}
 		cout<<"YES"<<"\n";
@@ -86,6 +117,11 @@ int main() {
 			cout<<ans[i]<<" ";
 		}
 		cout<<"\n";
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> 2d4be4502d01d283900b30c1270d44b8dd311e96
 	}
 	return 0;
 }
