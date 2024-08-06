@@ -10,46 +10,32 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
-		ll n,m;
+		ll n;
 		cin>>n;
-		vector<ll> a(n,0), b(n,0);
+		vector<ll> v(n,0);
+		ll min_num=1222232421;
+		ll min_idx=-1;
 		for(ll i=0;i<n;++i){
-			cin>>a[i];
+			cin>>v[i];
+			if(min_num>v[i]){
+				min_num=v[i];
+				min_idx=i;
+			}
 		}
-		map<ll,ll> need;
-		for(ll i=0;i<n;++i){
-			cin>>b[i];
-			++need[b[i]];
-		}
-		cin>>m;
-		vector<ll> d(m,0);
-		map<ll,ll> store;
 		bool flag=0;
-		for(ll i=0;i<m;++i){
-			cin>>d[i];
-			++store[d[i]];
-		}
-		if(!need[d[m-1]]){
-			flag=1;
-		}
-		
-		for(ll i=0;i<n;++i){
-			if(a[i]!=b[i]){
-				if(store[b[i]]){
-					--store[b[i]];
-				}else{
-					flag=1;
-					break;
-				}
+		for(ll i=min_idx+1;i<n-1;++i){
+			if(v[i]>v[i+1]){
+				flag=1;
+				break;
 			}
 		}
 		if(flag){
-			cout<<"NO"<<"\n";
-		}else{
-			cout<<"YES"<<"\n";
+			cout<<-1<<"\n";
+			continue;
 		}
-
-
+		cout<<min_idx<<"\n";
+		
+		
 	} 
 	return 0;
 }
