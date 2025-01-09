@@ -16,53 +16,38 @@ int main() {
 	ll t=1;
 	cin>>t;
 	while(t--){
-		ll n,m,q;
-		cin>>n>>m>>q;
-		vector<ll> a(n,0), b(m,0);
+		ll n;
+		cin>>n;
+		vector<ll> v(n,0);
 		for(ll i=0;i<n;++i){
-			cin>>a[i];
+			cin>>v[i];
 		}
-		for(ll i=0;i<m;++i){
-			cin>>b[i];
-		}
-		map<ll,ll> check;
-		ll a_idx=0, b_idx=0;
-		if(a[0]==b[0]){
-			++check[a[0]];
-			++a_idx;
-			++b_idx;
-		}else{
-			cout<<"TIDAK"<<"\n";
+		if(n==2){
+			if(v[0]>v[1]){
+				cout<<"NO"<<"\n";
+			}else{
+				cout<<"YES"<<"\n";
+			}
 			continue;
 		}
-		bool flag=0;
-		while(b_idx<m){
-			// b_idx에 있는 것을 check에서 처리할 수 있는지?
-			if(check[b[b_idx]]){
-				++b_idx;
-			}else{
-				// check에서 처리 못함
-				// a_idx의 값으로 처리할 수 있는지?
-				if(a_idx<n){
-					if(a[a_idx]==b[b_idx]){
-						++check[a[a_idx]];
-						++a_idx;
-						++b_idx;
-					}else{
-						flag=1;
-						break;
-					}
-				}else{
-					// (그럴일은 없겠지만) a다써도 처리 못함
-					flag=1;
-					break;
-				}
+		if(n%2==1){
+			cout<<"YES"<<"\n";
+			continue;
+		}
+		vector<ll> diff(n-1,0);
+		for(ll i=0;i<n-1;++i){
+			diff[i]=v[i+1]-v[i];
+		}
+		ll sum=0;
+		for(ll i=1;i<n-1;++i){
+			if(i%2==0){
+				sum+=diff[i];
 			}
 		}
-		if(flag){
-			cout<<"TIDAK"<<"\n";
+		if(sum<0){
+			cout<<"NO"<<"\n";
 		}else{
-			cout<<"YA"<<"\n";
+			cout<<"YES"<<"\n";
 		}
 	}
 	return 0;
