@@ -54,7 +54,6 @@ int main() {
 			for(ll i=1;i<m;++i){
 				ll cur_diff=pos[i]-pos[i-1];
 				ll new_diff=(d+1)-cur_diff; // 차이를 d+1로 만들기 위해 필요한 값
-				if(new_diff<=0) continue;
 				ll L=pos[i-1]-1;
 				ll R=n-pos[i];
 				if(L+R>=new_diff){
