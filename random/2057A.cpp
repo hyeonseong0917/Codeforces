@@ -16,7 +16,7 @@ int main() {
 	while(t--){
 		ll n,m;
 		cin>>n>>m;
-		cout<<max(n,m)<<"\n";
+		cout<<max(n+1,m+1)<<"\n";
 	} 
 	return 0;
 }
