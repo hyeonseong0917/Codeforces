@@ -1,0 +1,39 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <map>
+#include <cmath>
+#include <stack>
+#include <queue>
+using namespace std;
+
+#define ll long long
+int main() {
+	// your code goes here
+	int t=1;
+	// cin>>t;
+	while(t--){
+		ll n,k,x;
+		cin>>n>>k>>x;
+		vector<ll> v(n,0);
+		for(ll i=0;i<n;++i){
+			cin>>v[i];
+		}
+		sort(v.begin(),v.end());
+		vector<pair<ll,ll>> p;
+		ll cur_start=v[0];
+		ll cur_finish=v[0];
+		for(ll i=1;i<n;++i){
+			if(v[i]-cur_finish<=x){
+				cur_finish=v[i];
+			}else{
+				p.push_back(cur_start,cur_finish);
+				cur_start=v[i];
+				cur_finish=v[i];
+			}
+		}
+		p.push_back(cur_start,cur_finish);
+
+	} 
+	return 0;
+}
