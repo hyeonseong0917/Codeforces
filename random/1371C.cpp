@@ -19,23 +19,19 @@ int main() {
 	int t=1;
 	cin>>t;
 	while(t--){
-		
+		// 1553
+		// a개의 바닐라쿠키, b개의 초콜릿 쿠키 가지고있음
+		// n명 first type, m명 second type
+		// 각 손님은 쿠키의 타입을 선택함
+		// first type: v>c => v 선택, 아니면 c선택
+		// second type: v>c => c선택, 아니면 v선택 
 		ll a,b,n,m;
 		cin>>a>>b>>n>>m;
-		// a,b,c,m
-		// n과 m명의 손님
-		// 바닐라쿠키 a개, 쵸콜릿쿠키 b개
-		// n명의 사람들: a>b라면 --a, a<=b라면 --b
-		// m명의 사람들: a>b라면 --b, a<=b라면 --a
-		if(n+m>a+b){
-			cout<<"NO"<<"\n";
-		}else{
-			if(m<=min(a,b)){
-				cout<<"YES"<<"\n";
-			}else{
-				cout<<"NO"<<"\n";
-			}
-		}
+		// a b n m
+		// 2 2 1 2
+		// 
+
+
 	} 	
 
 	return 0;
