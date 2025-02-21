@@ -24,7 +24,7 @@ int main() {
 		}
 		ll lx=1, rx=100000;
 		ll max_idx=-1;
-		while(lx<=rx){
+		while(lx<=rx){2
 			ll mid=(lx+rx)/2;
 			if(L+mid*(mid+1)/2<=R){
 				max_idx=max(max_idx,mid);
