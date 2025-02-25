@@ -11,61 +11,56 @@ int main() {
 	int t=0;
 	cin>>t;
 	while(t--){
-		ll n;
-		cin>>n;
-		vector<ll> v(n,0);
-		// b[i]에 대해 a[i]혹은 a[i]-a[j]를 할당 가능
-		for(ll i=0;i<n;++i){
-			cin>>v[i];
+		// 최소 x이상으로 온도를 변경해야함
+		// L<=R 사이에서, |a-b|>=x && l<=b<=r
+
+		// 온도 a에서온도 b를 얻기 위해 필요한 최소의 오퍼레이션
+		// 불가능하면 불가능하다고
+		ll l,r,x;
+		cin>>l>>r>>x;
+		// 최소 x만큼을 움직일 수 있음. x보다 더 크게도 가능
+
+		// l<=r
+		ll a,b;
+		cin>>a>>b;
+		if(a==b){
+			cout<<0<<"\n";
+			continue;
 		}
-		sort(v.begin(),v.end());
-		// 2 3 4 6 8
-		// 1 4 6 7 9
-		vector<ll> odd_dp(n,0), even_dp(n,0);
-		// odd_dp[i]: i인덱스까지 홀수가 있는지?
-		// even_dp[i]: i인덱스까지 짝수가 있는지?
-		if(v[0]%2==0){
-			even_dp[0]=1;
+		if(abs(a-b)>=x){
+			cout<<1<<"\n";
 		}else{
-			odd_dp[0]=1;
-		}
-		for(ll i=1;i<n;++i){
-			if(v[i]%2==1){
-				odd_dp[i]=1;
+			// abs(a-b)<x
+			// 1. a를 L로 보내기
+			ll fst_cnt=2023101800, sed_cnt=2023101800;
+			if(abs(a-l)>=x){
+				// l로 보내면 되잖아
+				if(abs(l-b)>=x){
+					fst_cnt=2;
+				}
 			}else{
-				odd_dp[i]=odd_dp[i-1];
-			}
-		}
-		for(ll i=1;i<n;++i){
-			if(v[i]%2==0){
-				even_dp[i]=1;
-			}else{
-				even_dp[i]=even_dp[i-1];
-			}
-		}
-		bool flag=0;
-		if(v[0]%2==1){
-			// 홀수로 맞춰야함
-			for(ll i=1;i<n;++i){
-				if(v[i]%2==1) continue;
-				if(!odd_dp[i-1]){
-					flag=1;
-					break;
+				if(a+x<=r){
+					if(abs(l-b)>=x){
+						fst_cnt=3;
+					}
 				}
 			}
-		}else{
-			for(ll i=1;i<n;++i){
-				if(v[i]%2==0) continue;
-				if(!odd_dp[i-1]){
-					flag=1;
-					break;
+			if(abs(a-r)>=x){
+				if(abs(r-b)>=x){
+					sed_cnt=2;
+				}
+			}else{
+				if(a-x>=l){
+					if(abs(r-b)>=x){
+						sed_cnt=3;
+					}
 				}
 			}
-		}
-		if(flag){
-			cout<<"NO"<<"\n";
-		}else{
-			cout<<"YES"<<"\n";
+			if(fst_cnt==2023101800 && sed_cnt==2023101800){
+				cout<<-1<<"\n";
+			}else{
+				cout<<min(fst_cnt,sed_cnt)<<"\n";
+			}
 		}
 	} 
 	return 0;
