@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <map>
+#include <cmath>
 using namespace std;
  
 #define ll long long
@@ -43,6 +44,12 @@ int main() {
 		// 179 -> 64까지 다사는거 가능 => 64개
 		// 179-128=51
 		// 51 -> 16까지 다사는거 가능 => 
+		if(k>=32){
+			cout<<n+1<<"\n";
+		}else{
+			cout<<min((ll)pow(2,k),n+1)<<"\n";
+		}
+		
 	} 
 	return 0;
 }
