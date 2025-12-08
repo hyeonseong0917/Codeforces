@@ -24,34 +24,32 @@ int main() {
 		ll n;
 		cin>>n;
 		vector<ll> v(n,0);
-		vector<ll> check(n+1);
 		for(ll i=0;i<n;++i){
 			cin>>v[i];
-			++check[v[i]];
 		}
-		// [3,3,3,3,4,4,4,5,6,6,7],[]
-
-		// [4,5,5,6]
-		// [3,3,3,3,4,5]
-		// [3,3,3,4,4,5]
-		// [3,3,3,4,5,5]
-		// [3,3,4,4,5,5]
+		sort(v.begin(),v.end());
+		vector<ll> p;
+		p.push_back(v[0]);
+		ll L=1;
 		bool flag=0;
-		for(ll i=1;i<n;++i){
-			if(!check[i]) continue;
-			if(check[i]==1){
+		while(L<n){
+			ll ps=p.size();
+			if(v[L]!=p[ps-1]){
 				flag=1;
 				break;
 			}
-			ll diff=check[i]-2;
-			check[i]-=diff;
-			check[i+1]+=diff;
-		}	
-		for(ll i=1;i<=n;++i){
-			if(check[i]%2==1){
-				flag=1;
+			// v[L]==p[ps-1]
+			++L;
+			if(L>=n){
 				break;
 			}
+			for(ll i=L;i<n;++i){
+				if(v[i]==p[ps-1]){
+					++v[i];
+				}
+			}
+			p.push_back(v[L]);
+			++L;
 		}
 		if(flag){
 			cout<<"NO"<<"\n";
