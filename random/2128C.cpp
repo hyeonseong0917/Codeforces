@@ -18,24 +18,31 @@ int main() {
 	int o;
 	cin>>o;
 	while(o--){
-		ll n,k;
-		cin>>n>>k;
-		vector<ll> l(n,0),r(n,0),m(n,0);
+		ll n;
+		cin>>n;
+		vector<ll> v(n,0);
 		for(ll i=0;i<n;++i){
-			cin>>l[i]>>r[i]>>m[i];
+			cin>>v[i];
 		}
-		vector<pair<ll,pair<ll,ll>>> v;
-		for(ll i=0;i<n;++i){
-			v.push_back({m[i],{l[i],r[i]}});
-		}
-		sort(v.begin(),v.end());
-		for(ll i=0;i<n;++i){
-			if(k<v[i].first && v[i].second.first<=k && k<=v[i].second.second){
-				k=v[i].first;
+		ll min_num=v[0];
+		bool flag=0;
+		for(ll i=1;i<n;++i){
+			if(v[i]<=min_num){
+				min_num=v[i];
+			}else{
+				// v[i]>=min_num
+				ll cur_num=v[i]-(min_num-1);
+				if(min_num<cur_num){
+					flag=1;
+					break;
+				}
 			}
 		}
-		cout<<k<<"\n";
-
+		if(flag){
+			cout<<"NO"<<"\n";
+		}else{
+			cout<<"YES"<<"\n";
+		}
 	}
 	return 0;
 }
