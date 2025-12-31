@@ -16,36 +16,45 @@ int main() {
 	while(t--){
 		ll n;
 		cin>>n;
-		vector<ll> v(n,0);
-		for(ll i=0;i<n;++i){
+		vector<ll> v(n+1,0);
+		for(ll i=1;i<=n;++i){
 			cin>>v[i];
 		}
-		if(n==2){
-			ll ans=max(0ll,v[0]-v[1]);
-			cout<<ans<<"\n";
-		}else{
-			ll ans=0;
-			if(n%2==0){
-				v.push_back(0);
+		ll ans=0;
+		for(ll i=2;i<=n;++i){
+			if(i%2!=0) continue;
+			ll L=i-1;
+			ll R=i+1;
+			if(v[L]>v[i]){
+				ans+=v[L]-v[i];
+				v[L]=v[i];
 			}
-			for(ll i=1;i<n;i+=2){
-				if(v[i-1]+v[i+1]<=v[i]) continue;
-				if(v[i-1]>v[i]){
-					ans+=v[i-1]-v[i];
-					v[i-1]=v[i];
-				}
-				if(v[i+1]>v[i]){
-					ans+=v[i+1]-v[i];
-					v[i+1]=v[i];
-				}
-				if(v[i]<v[i-1]+v[i+1]){
-					ll c=min(v[i+1],v[i-1]+v[i+1]-v[i]);
-					ans+=c;
-					v[i+1]-=c;
+			if(R<=n){
+				if(v[R]>v[i]){
+					ans+=v[R]-v[i];
+					v[R]=v[i];
 				}
 			}
-			cout<<ans<<"\n";
 		}
+		for(ll i=2;i<=n;++i){
+			if(i%2!=0) continue;
+			ll L=i-1;
+			ll R=i+1;
+			ll c=v[L];
+			if(R<=n){
+				c+=v[R];
+			}
+			if(c>=v[i]){
+				ll diff=c-v[i];
+				ans+=diff;
+				if(R<=n){
+					v[R]-=diff;
+					v[R]=max(0ll,v[R]);
+				}
+			}
+		}
+		cout<<ans<<"\n";
+		
 	} 	
 
 	return 0;
