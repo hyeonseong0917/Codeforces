@@ -8,6 +8,7 @@
 using namespace std;
 
 #define ll long long
+#define pb push_back
 
 int main() {
 	// your code goes here
@@ -20,49 +21,32 @@ int main() {
 	while(t--){
 		ll n;
 		cin>>n;
-		vector<ll> v(n,0);
+		vector<ll> odd_vec, even_vec;
+		ll max_num=0;
 		for(ll i=0;i<n;++i){
-			cin>>v[i];
-		}
-		sort(v.begin(),v.end());
-		ll max_odd=-1;
-		bool flag=0;
-		for(ll i=0;i<n;++i){
-			if(v[i]%2==1){
-				max_odd=v[i];
+			ll a;
+			cin>>a;
+			max_num=max(max_num,a);
+			if(a%2==0){
+				even_vec.pb(a);
+			}else{
+				odd_vec.pb(a);
 			}
 		}
-		if(max_odd==-1){
-			cout<<v[n-1]<<"\n";
+		if(even_vec.empty() || odd_vec.empty()){
+			cout<<max_num<<"\n";
 			continue;
 		}
-		vector<ll> tmp;
-		for(ll i=0;i<n;++i){
-			if(v[i]==max_odd && !flag){
-				flag=1;
-			}else{
-				tmp.push_back(v[i]);
-			}
+		sort(even_vec.begin(),even_vec.end());
+		sort(odd_vec.begin(),odd_vec.end());
+		max_num=odd_vec[odd_vec.size()-1];
+		for(ll i=0;i<even_vec.size();++i){
+			max_num+=even_vec[i];
 		}
-		vector<ll> odd_vec, even_vec;
-		for(ll i=0;i<n-1;++i){
-			if(tmp[i]%2==0){
-				even_vec.push_back(tmp[i]);
-			}else{
-				odd_vec.push_back(tmp[i]);
-			}
+		for(ll i=0;i<odd_vec.size()-1;++i){
+			max_num+=odd_vec[i]-1;
 		}
-		if(even_vec.empty()){
-			cout<<max_odd<<"\n";
-		}else{
-			for(ll i=0;i<even_vec.size();++i){
-				max_odd+=even_vec[i];
-			}
-			for(ll i=0;i<odd_vec.size();++i){
-				max_odd+=odd_vec[i]-1;
-			}
-			cout<<max_odd<<"\n";
-		}
+		cout<<max_num<<"\n";
 	}
 	return 0;
 }
